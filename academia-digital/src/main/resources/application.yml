@@ -1,0 +1,13 @@
+spring:
+ datasource:
+  url: jdbc:mysql://localhost/academia?createDatabaseIfNotExist=true&serverTimezone=UTC&useLegacyDate
+  username: root
+  password: Agatha#2410
+
+
+ jpa: 
+  show-sql: true
+  hibernate:
+   ddl-auto: update
+  properties:
+   hibernate.format_sql: true
