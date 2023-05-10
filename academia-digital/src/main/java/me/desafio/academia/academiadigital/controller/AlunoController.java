@@ -1,6 +1,9 @@
 package me.desafio.academia.academiadigital.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
@@ -29,9 +32,20 @@ public class AlunoController {
   }
 
   @GetMapping
-  public List<Aluno> getAll(@RequestParam(value = "dataDeNascimento", required = false)
+  @Cacheable(value = "getAll")
+  public ResponseEntity<List<Aluno>> getAll(@RequestParam(value = "dataDeNascimento", required = false)
                                   String dataDeNacimento){
-    return service.getAll(dataDeNacimento);
+	  List<Aluno> lista = service.getAll(dataDeNacimento);
+	  return ResponseEntity.ok()
+			  //.cacheControl(CacheControl.maxAge(60, TimeUnit.SECONDS))
+			  .body(lista);
+  }
+  
+  @GetMapping("/cancel")
+  @CacheEvict(value = "getAll", allEntries = true)
+  public String cancel() {
+	  System.out.println("Limpando cache");
+	  return "Cache Cancelado";
   }
 
 
