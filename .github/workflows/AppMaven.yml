@@ -28,7 +28,7 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Build with Maven
-      run: mvn --batch-mode --update-snapshots pom.xml
+      run: mvn -B package --file C:\projetos\DesafioDeProjeto4-dio\desafio-academia-digital-dio\academia-digital\pom.xml
 
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
     - name: Update dependency graph
